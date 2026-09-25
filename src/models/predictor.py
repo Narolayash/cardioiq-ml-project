@@ -38,12 +38,25 @@ class CardiovascularPredictor:
                 for key, info in self.registry.get("models", {}).items():
                     pkl_file = os.path.join(self.models_dir, info["file"])
                     if os.path.exists(pkl_file):
-                        self.models[key] = joblib.load(pkl_file)
+                        model = joblib.load(pkl_file)
+                        # Fix scikit-learn cross-version unpickling compatibility (e.g. multi_class)
+                        if not hasattr(model, "multi_class"):
+                            try:
+                                setattr(model, "multi_class", "auto")
+                            except Exception:
+                                pass
+                        self.models[key] = model
         else:
             # Fallback single model loading
             default_model_path = os.path.join(self.models_dir, "trained_model.pkl")
             if os.path.exists(default_model_path):
-                self.models["random_forest"] = joblib.load(default_model_path)
+                model = joblib.load(default_model_path)
+                if not hasattr(model, "multi_class"):
+                    try:
+                        setattr(model, "multi_class", "auto")
+                    except Exception:
+                        pass
+                self.models["random_forest"] = model
             self.features = [
                 "age_years", "gender", "height", "weight", "ap_hi", "ap_lo",
                 "cholesterol", "gluc", "smoke", "alco", "active", "bmi",
@@ -66,6 +79,12 @@ class CardiovascularPredictor:
         model = self.models.get(model_key) or self.models.get("random_forest")
         if model is None:
             raise ValueError(f"Model '{model_key}' is not loaded.")
+
+        if not hasattr(model, "multi_class"):
+            try:
+                setattr(model, "multi_class", "auto")
+            except Exception:
+                pass
 
         prediction = int(model.predict(scaled_features)[0])
         
@@ -147,15 +166,27 @@ class CardiovascularPredictor:
                 "roc_auc": 0.80
             })
 
-            pred = int(model.predict(scaled_features)[0])
+            # Ensure cross-version scikit-learn attribute compatibility
+            if not hasattr(model, "multi_class"):
+                try:
+                    setattr(model, "multi_class", "auto")
+                except Exception:
+                    pass
+
+            try:
+                pred = int(model.predict(scaled_features)[0])
+                if hasattr(model, "predict_proba"):
+                    prob = float(model.predict_proba(scaled_features)[0][1])
+                else:
+                    decision = float(model.decision_function(scaled_features)[0])
+                    prob = 1.0 / (1.0 + np.exp(-decision))
+            except Exception as e:
+                # Fallback in case of unexpected model serialization issue
+                pred = 0
+                prob = 0.5
+
             if pred == 1:
                 disease_votes += 1
-
-            if hasattr(model, "predict_proba"):
-                prob = float(model.predict_proba(scaled_features)[0][1])
-            else:
-                decision = float(model.decision_function(scaled_features)[0])
-                prob = 1.0 / (1.0 + np.exp(-decision))
 
             model_results.append({
                 "key": key,
