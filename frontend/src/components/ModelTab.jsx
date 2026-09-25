@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { 
   GitBranch, Trees, Zap, Disc, Users, Sigma, Activity, 
-  CheckCircle, Target, Award, FileCode, Calendar, Layers, ShieldCheck
+  Award, FileCode, Calendar, Layers
 } from 'lucide-react';
 import { API_BASE_URL } from '../api';
 
@@ -36,49 +36,48 @@ export default function ModelTab() {
 
   return (
     <div className="model-lab-container">
-      {/* Header */}
+      {/* Section Header */}
       <div className="section-block">
         <div className="section-label">MODEL LAB & REGISTRY</div>
         <h2 className="section-heading">Trained Model Artifacts (.pkl)</h2>
         <p className="section-subtext">
-          7 dedicated machine learning classifiers trained and serialized for live inference.
+          7 dedicated machine learning classifiers trained and serialized for real-time inference.
         </p>
       </div>
 
-      {/* Grid of 7 Models matching User's Reference Layout */}
-      <div className="model-cards-grid">
+      {/* Grid of 7 Models Exactly Matching User's Reference Layout */}
+      <div className="ref-cards-grid">
         {modelsList.map((m) => (
           <div 
             key={m.key} 
-            className={`model-ref-card clickable ${selectedModel?.key === m.key ? 'active-selected' : ''}`}
+            className={`ref-model-card clickable ${selectedModel?.key === m.key ? 'active-selected' : ''}`}
             onClick={() => setSelectedModel(m)}
           >
-            <div className="m-card-header">
-              <div className="m-title-group">
-                <span className="m-icon text-blue">{getModelIcon(m.key)}</span>
-                <span className="m-name">{m.name}</span>
+            <div className="ref-model-header">
+              <div className="ref-model-title">
+                <span className="ref-model-icon">{getModelIcon(m.key)}</span>
+                <span className="ref-model-name">{m.name}</span>
               </div>
               {m.is_best && (
                 <span className="best-tag">
-                  <Award size={12} /> Top Model
+                  <Award size={12} /> Top
                 </span>
               )}
             </div>
 
-            <div className="m-meta-body">
-              <div className="m-meta-item">
-                <span className="m-lbl">File:</span>
-                <span className="m-val font-mono">{m.file}</span>
+            <div className="ref-model-rows">
+              <div className="ref-model-row">
+                <span className="ref-lbl">File:</span>
+                <span className="ref-val font-mono">{m.file}</span>
               </div>
-              <div className="m-meta-item">
-                <span className="m-lbl">Week:</span>
-                <span className="m-val">{m.week}</span>
+              <div className="ref-model-row">
+                <span className="ref-lbl">Week:</span>
+                <span className="ref-val">{m.week}</span>
               </div>
-            </div>
-
-            <div className="m-accuracy-footer">
-              <span className="m-lbl">Accuracy:</span>
-              <span className="m-acc-number">{m.accuracy}%</span>
+              <div className="ref-model-row">
+                <span className="ref-lbl">Accuracy:</span>
+                <span className="ref-acc">{m.accuracy}%</span>
+              </div>
             </div>
           </div>
         ))}
@@ -123,7 +122,7 @@ export default function ModelTab() {
             <div className="metric-kpi-box">
               <span className="m-kpi-label">F1-Score</span>
               <span className="m-kpi-val">{selectedModel.f1_score || '71.6'}%</span>
-              <span className="m-kpi-sub">Harmonic Precision/Recall Balance</span>
+              <span className="m-kpi-sub">Harmonic Balance</span>
             </div>
           </div>
 

@@ -87,14 +87,14 @@ export default function PredictorTab() {
 
   const getModelIcon = (key) => {
     switch (key) {
-      case 'decision_tree': return <GitBranch size={16} />;
-      case 'random_forest': return <Trees size={16} />;
-      case 'adaboost': return <Zap size={16} />;
-      case 'svm': return <Disc size={16} />;
-      case 'knn': return <Users size={16} />;
-      case 'naive_bayes': return <Sigma size={16} />;
-      case 'logistic_regression': return <Activity size={16} />;
-      default: return <Activity size={16} />;
+      case 'decision_tree': return <GitBranch size={18} />;
+      case 'random_forest': return <Trees size={18} />;
+      case 'adaboost': return <Zap size={18} />;
+      case 'svm': return <Disc size={18} />;
+      case 'knn': return <Users size={18} />;
+      case 'naive_bayes': return <Sigma size={18} />;
+      case 'logistic_regression': return <Activity size={18} />;
+      default: return <Activity size={18} />;
     }
   };
 
@@ -377,40 +377,38 @@ export default function PredictorTab() {
             </span>
           </div>
 
-          <div className="model-cards-grid">
+          <div className="ref-cards-grid">
             {multiResult.all_models.map((m) => (
-              <div key={m.key} className="model-ref-card">
-                <div className="m-card-header">
-                  <div className="m-title-group">
-                    <span className="m-icon">{getModelIcon(m.key)}</span>
-                    <span className="m-name">{m.name}</span>
+              <div key={m.key} className="ref-model-card">
+                <div className="ref-model-header">
+                  <div className="ref-model-title">
+                    <span className="ref-model-icon">{getModelIcon(m.key)}</span>
+                    <span className="ref-model-name">{m.name}</span>
                   </div>
                   <span 
-                    className="m-pred-pill"
+                    className="ref-live-tag"
                     style={{ 
-                      backgroundColor: `${m.risk_color}18`, 
-                      color: m.risk_color,
-                      borderColor: `${m.risk_color}40`
+                      backgroundColor: `${m.risk_color}14`, 
+                      color: m.risk_color
                     }}
                   >
                     {m.prediction_label} ({m.disease_probability}%)
                   </span>
                 </div>
 
-                <div className="m-meta-body">
-                  <div className="m-meta-item">
-                    <span className="m-lbl">File:</span>
-                    <span className="m-val font-mono">{m.file}</span>
+                <div className="ref-model-rows">
+                  <div className="ref-model-row">
+                    <span className="ref-lbl">File:</span>
+                    <span className="ref-val font-mono">{m.file}</span>
                   </div>
-                  <div className="m-meta-item">
-                    <span className="m-lbl">Week:</span>
-                    <span className="m-val">{m.week}</span>
+                  <div className="ref-model-row">
+                    <span className="ref-lbl">Week:</span>
+                    <span className="ref-val">{m.week}</span>
                   </div>
-                </div>
-
-                <div className="m-accuracy-footer">
-                  <span className="m-lbl">Accuracy:</span>
-                  <span className="m-acc-number">{m.accuracy}%</span>
+                  <div className="ref-model-row">
+                    <span className="ref-lbl">Accuracy:</span>
+                    <span className="ref-acc">{m.accuracy}%</span>
+                  </div>
                 </div>
               </div>
             ))}
