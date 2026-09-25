@@ -1,0 +1,22 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.ipynb_checkpoints/
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+.npm
+.eslintcache
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.log

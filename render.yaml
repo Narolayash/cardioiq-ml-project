@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: cardioiq-ml-platform
+    runtime: python
+    buildCommand: pip install -r requirements.txt && cd frontend && npm install && npm run build && cd ..
+    startCommand: gunicorn flask_app.app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.10.12

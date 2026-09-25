@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioGuard AI — Multi-Model Cardiovascular Risk Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i data-lucide="heart-pulse"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">CardioGuard <span>AI</span></h1>
+                    <p class="brand-subtitle">Clinical Multi-Model Machine Learning Intelligence</p>
+                </div>
+            </div>
+
+            <!-- Nav Tabs -->
+            <nav class="nav-tabs">
+                <button class="nav-btn active" data-tab="prediction-tab">
+                    <i data-lucide="activity"></i> Risk Predictor
+                </button>
+                <button class="nav-btn" data-tab="model-tab">
+                    <i data-lucide="cpu"></i> All Models ({7})
+                </button>
+                <button class="nav-btn" data-tab="eda-tab">
+                    <i data-lucide="bar-chart-3"></i> Dataset & EDA
+                </button>
+                <button class="nav-btn" data-tab="about-tab">
+                    <i data-lucide="file-text"></i> Architecture
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content Body -->
+        <main class="main-content">
+            
+            <!-- TAB 1: PREDICTION -->
+            <section id="prediction-tab" class="tab-pane active">
+                <div class="grid-2col">
+                    
+                    <!-- Left: Input Form Card -->
+                    <div class="card form-card">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title"><i data-lucide="user-check"></i> Patient Clinical Parameters</h2>
+                                <p class="card-desc">Enter patient vitals to evaluate across all 7 trained algorithms.</p>
+                            </div>
+                            <div class="preset-dropdown-wrap">
+                                <button class="btn btn-secondary btn-sm" id="presetBtn">
+                                    <i data-lucide="sparkles"></i> Load Preset <i data-lucide="chevron-down"></i>
+                                </button>
+                                <div class="preset-menu" id="presetMenu">
+                                    <div class="preset-item" data-sample="0">
+                                        <strong>Arjun Patel</strong> (Low Risk, 32y)
+                                    </div>
+                                    <div class="preset-item" data-sample="1">
+                                        <strong>Priya Sharma</strong> (Moderate Risk, 50y)
+                                    </div>
+                                    <div class="preset-item" data-sample="2">
+                                        <strong>Ramesh Verma</strong> (High Risk, 62y)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="predictionForm" class="prediction-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="age_years"><i data-lucide="calendar"></i> Age (Years)</label>
+                                    <input type="number" id="age_years" name="age_years" min="18" max="100" value="52" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gender"><i data-lucide="users"></i> Biological Gender</label>
+                                    <select id="gender" name="gender" required>
+                                        <option value="2">Male</option>
+                                        <option value="1">Female</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="height"><i data-lucide="ruler"></i> Height (cm)</label>
+                                    <input type="number" id="height" name="height" min="100" max="230" value="168" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="weight"><i data-lucide="scale"></i> Weight (kg)</label>
+                                    <input type="number" id="weight" name="weight" step="0.1" min="30" max="220" value="75.0" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ap_hi"><i data-lucide="gauge"></i> Systolic BP (ap_hi mmHg)</label>
+                                    <input type="number" id="ap_hi" name="ap_hi" min="80" max="220" value="135" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ap_lo"><i data-lucide="gauge"></i> Diastolic BP (ap_lo mmHg)</label>
+                                    <input type="number" id="ap_lo" name="ap_lo" min="50" max="140" value="85" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cholesterol"><i data-lucide="droplet"></i> Serum Cholesterol</label>
+                                    <select id="cholesterol" name="cholesterol" required>
+                                        <option value="1">1: Normal (<200 mg/dL)</option>
+                                        <option value="2">2: Above Normal (200-239 mg/dL)</option>
+                                        <option value="3">3: Well Above Normal (≥240 mg/dL)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gluc"><i data-lucide="cookie"></i> Fasting Glucose</label>
+                                    <select id="gluc" name="gluc" required>
+                                        <option value="1">1: Normal (<100 mg/dL)</option>
+                                        <option value="2">2: Above Normal (100-125 mg/dL)</option>
+                                        <option value="3">3: High (≥126 mg/dL)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="smoke"><i data-lucide="flame"></i> Smoker</label>
+                                    <select id="smoke" name="smoke" required>
+                                        <option value="0">No (Non-smoker)</option>
+                                        <option value="1">Yes (Active Smoker)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="alco"><i data-lucide="wine"></i> Alcohol Intake</label>
+                                    <select id="alco" name="alco" required>
+                                        <option value="0">No / Occasional</option>
+                                        <option value="1">Yes / Regular</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="active"><i data-lucide="dumbbell"></i> Physical Activity</label>
+                                    <select id="active" name="active" required>
+                                        <option value="1">Yes (Active / Regular Exercise)</option>
+                                        <option value="0">No (Sedentary)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group derived-indicator">
+                                    <label><i data-lucide="calculator"></i> Real-time Derived Metrics</label>
+                                    <div class="metrics-mini-pill">
+                                        <span>BMI: <strong id="liveBmi">26.6</strong></span>
+                                        <span>Pulse Press.: <strong id="livePulse">50 mmHg</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                                    <i data-lucide="stethoscope"></i> Predict Across All 7 ML Models
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right: Prediction Results Card -->
+                    <div class="card result-card" id="resultContainer">
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title"><i data-lucide="shield-alert"></i> Primary Assessment (Best Model)</h2>
+                                <p class="card-desc">Random Forest (Tuned) — 73.45% Accuracy, 0.8012 ROC-AUC</p>
+                            </div>
+                            <span class="status-badge" id="riskBadge">Awaiting Input</span>
+                        </div>
+
+                        <div class="result-content" id="resultContent">
+                            <div class="empty-state" id="emptyState">
+                                <i data-lucide="heart" class="empty-icon"></i>
+                                <h3>Ready for Multi-Model Assessment</h3>
+                                <p>Fill in patient vitals and click "Predict Across All 7 ML Models" to evaluate all algorithms simultaneously.</p>
+                            </div>
+
+                            <div class="prediction-view hidden" id="predictionView">
+                                <div class="gauge-section">
+                                    <div class="probability-circle" id="probCircle">
+                                        <div class="prob-number" id="probNumber">0%</div>
+                                        <div class="prob-subtext">Disease Risk</div>
+                                    </div>
+                                    <div class="risk-classification">
+                                        <h3 id="diagnosisText">Cardiovascular Risk Assessment</h3>
+                                        <p id="adviceText">Clinical analysis recommendation will appear here.</p>
+                                    </div>
+                                </div>
+
+                                <div class="factors-section">
+                                    <h4><i data-lucide="alert-triangle"></i> Identified Clinical Risk Factors:</h4>
+                                    <ul class="factors-list" id="factorsList"></ul>
+                                </div>
+
+                                <div class="derived-grid">
+                                    <div class="metric-box">
+                                        <div class="metric-label">BMI</div>
+                                        <div class="metric-val" id="resBmi">--</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Pulse Pressure</div>
+                                        <div class="metric-val" id="resPulse">-- mmHg</div>
+                                    </div>
+                                    <div class="metric-box">
+                                        <div class="metric-label">Mean Arterial (MAP)</div>
+                                        <div class="metric-val" id="resMap">-- mmHg</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- TAB 2: MODEL METRICS & 7 MODELS REGISTRY -->
+            <section id="model-tab" class="tab-pane">
+                <div class="section-header">
+                    <h2 class="section-title">All Trained Models Registry</h2>
+                    <p class="section-desc">7 Dedicated ML Classifiers trained and saved as serialized (.pkl) artifacts:</p>
+                </div>
+
+                <!-- Reference Grid matching attached image -->
+                <div class="reference-grid" id="modelsReferenceGrid"></div>
+            </section>
+
+            <!-- TAB 3: EDA DASHBOARD -->
+            <section id="eda-tab" class="tab-pane">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title"><i data-lucide="pie-chart"></i> Exploratory Data Analysis & Clinical Insights</h2>
+                            <p class="card-desc">Insights computed across 68,555 cleaned cardiovascular records.</p>
+                        </div>
+                        <div class="record-pill"><i data-lucide="database"></i> 68,555 Records Analyzed</div>
+                    </div>
+
+                    <div class="eda-grid">
+                        <div class="eda-card">
+                            <h4><i data-lucide="droplets"></i> Disease Rate by Cholesterol Level</h4>
+                            <div class="eda-bar-row">
+                                <span>Level 1 (Normal)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 43.5%;">43.5%</div></div>
+                            </div>
+                            <div class="eda-bar-row">
+                                <span>Level 2 (Above Normal)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 59.6%; background: #f39c12;">59.6%</div></div>
+                            </div>
+                            <div class="eda-bar-row">
+                                <span>Level 3 (High)</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 76.2%; background: #e74c3c;">76.2%</div></div>
+                            </div>
+                        </div>
+
+                        <div class="eda-card">
+                            <h4><i data-lucide="activity"></i> Mean Systolic Blood Pressure Contrast</h4>
+                            <div class="bp-contrast">
+                                <div class="bp-box healthy">
+                                    <div class="bp-val">119.6 mmHg</div>
+                                    <div class="bp-lbl">Healthy Cohort Average</div>
+                                </div>
+                                <div class="bp-box diseased">
+                                    <div class="bp-val">133.8 mmHg</div>
+                                    <div class="bp-lbl">Disease Cohort Average</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: ABOUT & ARCHITECTURE -->
+            <section id="about-tab" class="tab-pane">
+                <div class="card">
+                    <h2 class="card-title"><i data-lucide="code"></i> Project Architecture & ML Pipeline</h2>
+                    <p class="card-desc">Comprehensive system overview with 7 trained ML model artifacts.</p>
+
+                    <div class="pipeline-steps">
+                        <div class="pipe-step">
+                            <div class="step-num">1</div>
+                            <div class="step-text">
+                                <strong>Exploration & Quality Analysis</strong>
+                                <p>Analyzed 70,000 raw patient records, identified physiological BP anomalies, and verified 50-50 target balance.</p>
+                            </div>
+                        </div>
+                        <div class="pipe-step">
+                            <div class="step-num">2</div>
+                            <div class="step-text">
+                                <strong>Data Preprocessing & Outlier Removal</strong>
+                                <p>Filtered $ap\_hi > ap\_lo$, computed BMI, Pulse Pressure, and Mean Arterial Pressure ($MAP$).</p>
+                            </div>
+                        </div>
+                        <div class="pipe-step">
+                            <div class="step-num">3</div>
+                            <div class="step-text">
+                                <strong>Scratch Logistic Regression Implementation</strong>
+                                <p>Implemented Logistic Regression from pure NumPy without Sklearn (Sigmoid, Log Loss, Gradient Descent).</p>
+                            </div>
+                        </div>
+                        <div class="pipe-step">
+                            <div class="step-num">4</div>
+                            <div class="step-text">
+                                <strong>7 Model Benchmarking & Export</strong>
+                                <p>Trained and exported 7 individual model artifacts (.pkl) matching academic review requirements.</p>
+                            </div>
+                        </div>
+                        <div class="pipe-step">
+                            <div class="step-num">5</div>
+                            <div class="step-text">
+                                <strong>Multi-Model Flask API & React Frontend</strong>
+                                <p>Simultaneous multi-model inference endpoint (/api/predict-all) with live consensus score.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>CardioGuard AI — Academic Machine Learning Project | 7 Trained Classification Artifacts</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
