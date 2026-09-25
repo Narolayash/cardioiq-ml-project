@@ -1179,13 +1179,36 @@ body {
   font-size: 0.95rem;
 }
 
-.ref-live-tag {
-  display: inline-flex;
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
+.ref-prediction-banner {
+  margin-top: 6px;
+  padding: 7px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.pred-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pred-text {
+  flex: 1;
   white-space: nowrap;
+}
+
+.pred-pct {
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .consensus-pill {

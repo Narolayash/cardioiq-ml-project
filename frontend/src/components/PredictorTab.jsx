@@ -385,15 +385,6 @@ export default function PredictorTab() {
                     <span className="ref-model-icon">{getModelIcon(m.key)}</span>
                     <span className="ref-model-name">{m.name}</span>
                   </div>
-                  <span 
-                    className="ref-live-tag"
-                    style={{ 
-                      backgroundColor: `${m.risk_color}14`, 
-                      color: m.risk_color
-                    }}
-                  >
-                    {m.prediction_label} ({m.disease_probability}%)
-                  </span>
                 </div>
 
                 <div className="ref-model-rows">
@@ -409,6 +400,20 @@ export default function PredictorTab() {
                     <span className="ref-lbl">Accuracy:</span>
                     <span className="ref-acc">{m.accuracy}%</span>
                   </div>
+                </div>
+
+                {/* Prominent Full-Width Prediction Outcome Banner */}
+                <div 
+                  className="ref-prediction-banner"
+                  style={{
+                    backgroundColor: m.prediction === 1 ? '#fef2f2' : '#f0fdf4',
+                    borderColor: m.prediction === 1 ? '#fecaca' : '#bbf7d0',
+                    color: m.prediction === 1 ? '#dc2626' : '#16a34a'
+                  }}
+                >
+                  <span className="pred-dot" style={{ backgroundColor: m.prediction === 1 ? '#dc2626' : '#16a34a' }}></span>
+                  <span className="pred-text">{m.prediction_label}</span>
+                  <span className="pred-pct font-mono font-bold">({m.disease_probability}%)</span>
                 </div>
               </div>
             ))}
