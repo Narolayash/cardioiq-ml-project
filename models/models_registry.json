@@ -26,7 +26,7 @@
             "icon": "trees",
             "accuracy": 73.37,
             "precision": 75.63,
-            "recall": 68.10,
+            "recall": 68.1,
             "f1_score": 71.67,
             "roc_auc": 0.8002,
             "is_best": true
@@ -47,16 +47,16 @@
         },
         "decision_tree": {
             "key": "decision_tree",
-            "name": "Decision Tree",
+            "name": "Decision Tree Classifier",
             "category": "Tree Classifier",
             "file": "decision_tree_model.pkl",
             "week": "Week 4",
             "icon": "git-branch",
-            "accuracy": 72.61,
-            "precision": 74.35,
-            "recall": 68.10,
-            "f1_score": 71.09,
-            "roc_auc": 0.7818,
+            "accuracy": 72.29,
+            "precision": 74.95,
+            "recall": 66.05,
+            "f1_score": 70.22,
+            "roc_auc": 0.7864,
             "is_best": false
         },
         "adaboost": {
@@ -108,11 +108,11 @@
             "file": "svm_model.pkl",
             "week": "Week 5",
             "icon": "disc",
-            "accuracy": 72.76,
-            "precision": 75.30,
-            "recall": 67.10,
-            "f1_score": 70.96,
-            "roc_auc": 0.7925,
+            "accuracy": 56.16,
+            "precision": 57.16,
+            "recall": 45.32,
+            "f1_score": 50.56,
+            "roc_auc": 0.5874,
             "is_best": false
         }
     }
